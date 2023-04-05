@@ -104,6 +104,19 @@
                     var jaygahZarb = val.indexOf('*')
                     var jaygahPlus = val.indexOf('+')
                     var jaygahMenha = val.indexOf('-')
+                    
+                    ////////taqsim//////////////
+                    while (jaygahTaq != -1) {
+
+                        var num1 = val.search(taq)
+                        console.log(num1);
+                        var previous1 = val.slice(num1 , jaygahTaq) //عدد قبل
+                        var next1 = parseFloat(val.slice(jaygahTaq + 1)) //عدد بعد
+
+                        val = val.replace(previous1 + '/' + next1 , previous1 / next1 )
+                        console.log(val.replace(previous1 + '/' + next1 , previous1 / next1 ));
+                        var jaygahTaq = val.indexOf('/')
+                    }
 
                 } else if(ev.target.innerHTML == '+' || ev.target.dataset.number == '-' || ev.target.dataset.number == '*' || ev.target.dataset.number == '/'){//operator
                     input.value += ev.target.innerHTML
