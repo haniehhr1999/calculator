@@ -137,6 +137,19 @@
                         console.log(val);
                         var jaygahPlus = val.indexOf('+')
                     }
+                    ////////menha/////////////////
+                    while (jaygahMenha != -1) {
+    
+                        var num4 = val.search(menha)
+                        var previous4 = val.slice(num4 , jaygahMenha) 
+                        var next4 = parseFloat(val.slice(jaygahMenha + 1)) 
+                        val = val.replace(previous4 + '-' + next4 , Number(previous4) - Number(next4) )
+                        console.log(val);
+                        if (manfiNum.test(val)) {
+                            alert('hello')
+                        }
+                        var jaygahMenha = val.indexOf('-')
+                    }
 
                 } else if(ev.target.innerHTML == '+' || ev.target.dataset.number == '-' || ev.target.dataset.number == '*' || ev.target.dataset.number == '/'){//operator
                     input.value += ev.target.innerHTML
