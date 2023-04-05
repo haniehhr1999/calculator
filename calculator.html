@@ -92,7 +92,15 @@
         var btn = document.querySelectorAll('.btn')
         btn.forEach(element => {
             element.addEventListener('click' , function(ev){
-                
+                if (ev.target.innerHTML == '=') {//equal
+                    input.value += ev.target.innerHTML
+                } else if(ev.target.innerHTML == '+' || ev.target.dataset.number == '-' || ev.target.dataset.number == '*' || ev.target.dataset.number == '/'){//operator
+                    input.value += ev.target.innerHTML
+                } else if(ev.target.innerHTML == 'off'){  //on , off
+                    input.value += ev.target.innerHTML
+                } else{//number
+                    input.value += ev.target.innerHTML
+                }
             })
         });
    
