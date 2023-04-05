@@ -94,6 +94,17 @@
             element.addEventListener('click' , function(ev){
                 if (ev.target.innerHTML == '=') {//equal
                     input.value += ev.target.innerHTML
+                    var val = input.value
+                    var taq = /([+-]?\d+(\.\d+)?)\/([+-]?\d+(\.\d+)?)/g
+                    var zarb = /([+-]?\d+(\.\d+)?)\*([+-]?\d+(\.\d+)?)/g
+                    var plus = /([+-]?\d+(\.\d+)?)\+([+-]?\d+(\.\d+)?)/g
+                    var menha = /([+-]?\d+(\.\d+)?)\-([+-]?\d+(\.\d+)?)/g
+                    var manfiNum = /-\d+(\.\d+)?/g
+                    var jaygahTaq = val.indexOf('/')
+                    var jaygahZarb = val.indexOf('*')
+                    var jaygahPlus = val.indexOf('+')
+                    var jaygahMenha = val.indexOf('-')
+
                 } else if(ev.target.innerHTML == '+' || ev.target.dataset.number == '-' || ev.target.dataset.number == '*' || ev.target.dataset.number == '/'){//operator
                     input.value += ev.target.innerHTML
                 } else if(ev.target.innerHTML == 'off'){  //on , off
