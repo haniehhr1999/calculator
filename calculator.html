@@ -127,6 +127,16 @@
                         console.log(val);
                         var jaygahZarb = val.indexOf('*')
                     }
+                    ////////jam/////////////////
+                    while (jaygahPlus != -1) {
+
+                        var num3 = val.search(plus)
+                        var previous3 = val.slice(num3 , jaygahPlus) 
+                        var next3 = parseFloat(val.slice(jaygahPlus + 1)) 
+                        val = val.replace(previous3 + '+' + next3 , Number(previous3) + Number(next3) )
+                        console.log(val);
+                        var jaygahPlus = val.indexOf('+')
+                    }
 
                 } else if(ev.target.innerHTML == '+' || ev.target.dataset.number == '-' || ev.target.dataset.number == '*' || ev.target.dataset.number == '/'){//operator
                     input.value += ev.target.innerHTML
