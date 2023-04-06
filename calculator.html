@@ -93,62 +93,65 @@
         btn.forEach(element => {
             element.addEventListener('click' , function(ev){
                 if (ev.target.innerHTML == '=') {//equal
-                    input.value += ev.target.innerHTML
-                    var val = input.value
+                    // input.value += ev.target.innerHTML
+                    // var val = input.value
                     var taq = /([+-]?\d+(\.\d+)?)\/([+-]?\d+(\.\d+)?)/g
                     var zarb = /([+-]?\d+(\.\d+)?)\*([+-]?\d+(\.\d+)?)/g
                     var plus = /([+-]?\d+(\.\d+)?)\+([+-]?\d+(\.\d+)?)/g
                     var menha = /([+-]?\d+(\.\d+)?)\-([+-]?\d+(\.\d+)?)/g
-                    var manfiNum = /-\d+(\.\d+)?/g
-                    var jaygahTaq = val.indexOf('/')
-                    var jaygahZarb = val.indexOf('*')
-                    var jaygahPlus = val.indexOf('+')
-                    var jaygahMenha = val.indexOf('-')
+                    var manfiNum = /^-\d+(\.\d+)?/g
+                    var jaygahTaq = input.value.indexOf('/')
+                    var jaygahZarb = input.value.indexOf('*')
+                    var jaygahPlus = input.value.indexOf('+')
+                    var jaygahMenha = input.value.indexOf('-')
 
                     ////////taqsim//////////////
                     while (jaygahTaq != -1) {
 
-                        var num1 = val.search(taq)
+                        var num1 = input.value.search(taq)
                         console.log(num1);
-                        var previous1 = val.slice(num1 , jaygahTaq) //عدد قبل
-                        var next1 = parseFloat(val.slice(jaygahTaq + 1)) //عدد بعد
+                        var previous1 = input.value.slice(num1 , jaygahTaq) //عدد قبل
+                        var next1 = parseFloat(input.value.slice(jaygahTaq + 1)) //عدد بعد
 
-                        val = val.replace(previous1 + '/' + next1 , previous1 / next1 )
-                        console.log(val.replace(previous1 + '/' + next1 , previous1 / next1 ));
-                        var jaygahTaq = val.indexOf('/')
+                        input.value = input.value.replace(previous1 + '/' + next1 , previous1 / next1 )
+                        console.log(input.value.replace(previous1 + '/' + next1 , previous1 / next1 ));
+                        var jaygahTaq = input.value.indexOf('/')
                     }
                     ////////zarb//////////////
                     while (jaygahZarb != -1) {
 
-                        var num2 = val.search(zarb)
-                        var previous2 = val.slice(num2 , jaygahZarb) //عدد قبل
-                        var next2 = parseFloat(val.slice(jaygahZarb + 1)) //عدد بعد
-                        val = val.replace(previous2 + '*' + next2 , previous2 * next2 )
-                        console.log(val);
-                        var jaygahZarb = val.indexOf('*')
+                        var num2 = input.value.search(zarb)
+                        var previous2 = input.value.slice(num2 , jaygahZarb) //عدد قبل
+                        var next2 = parseFloat(input.value.slice(jaygahZarb + 1)) //عدد بعد
+                        input.value = input.value.replace(previous2 + '*' + next2 , previous2 * next2 )
+                        console.log(input.value);
+                        var jaygahZarb = input.value.indexOf('*')
                     }
                     ////////jam/////////////////
                     while (jaygahPlus != -1) {
 
-                        var num3 = val.search(plus)
-                        var previous3 = val.slice(num3 , jaygahPlus) 
-                        var next3 = parseFloat(val.slice(jaygahPlus + 1)) 
-                        val = val.replace(previous3 + '+' + next3 , Number(previous3) + Number(next3) )
-                        console.log(val);
-                        var jaygahPlus = val.indexOf('+')
+                        var num3 = input.value.search(plus)
+                        var previous3 = input.value.slice(num3 , jaygahPlus) 
+                        var next3 = parseFloat(input.value.slice(jaygahPlus + 1)) 
+                        input.value = input.value.replace(previous3 + '+' + next3 , Number(previous3) + Number(next3) )
+                        console.log(input.value);
+                        var jaygahPlus = input.value.indexOf('+')
                     }
                     ////////menha/////////////////
                     while (jaygahMenha != -1) {
-    
-                        var num4 = val.search(menha)
-                        var previous4 = val.slice(num4 , jaygahMenha) 
-                        var next4 = parseFloat(val.slice(jaygahMenha + 1)) 
-                        val = val.replace(previous4 + '-' + next4 , Number(previous4) - Number(next4) )
-                        console.log(val);
-                        if (manfiNum.test(val)) {
-                            alert('hello')
+                        if (menha.test(input.value)) {
+                            var num4 = input.value.search(menha)
+                            var previous4 = input.value.slice(num4 , jaygahMenha) 
+                            var next4 = parseFloat(input.value.slice(jaygahMenha + 1)) 
+                            input.value = input.value.replace(previous4 + '-' + next4 , Number(previous4) - Number(next4) )
+                            console.log(input.value);
+                            
+                            var jaygahMenha = input.value.indexOf('-')
+                            
+                        }else if(manfiNum.test(input.value)){
+                            break;
                         }
-                        var jaygahMenha = val.indexOf('-')
+    
                     }
 
                 } else if(ev.target.innerHTML == '+' || ev.target.dataset.number == '-' || ev.target.dataset.number == '*' || ev.target.dataset.number == '/'){//operator
