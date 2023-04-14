@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calculator</title>
     <style>
-        
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
         .calc{
             display: inline-block;
-            padding: 20px 10px;
+            padding: 50px 30px;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.745);
             border-radius: 5px;
             
@@ -60,6 +65,12 @@
             grid-row-start: 5;
             grid-row-end: 6;
         }
+        #b17{
+            grid-column-start: 1;
+            grid-column-end: 5;
+            grid-row-start: 6;
+            grid-row-end: 7;
+        }
 
     </style>
 </head>
@@ -83,6 +94,7 @@
             <div class="btn" id="b14" data-number="-">-</div>
             <div class="btn" id="b15" data-number="0">0</div>
             <div class="btn" id="b16" data-number="=" onclick="console.log(this)">=</div>
+            <div class="btn" id="b17" data-number=".">.</div>
         </div>
     </div>
     
@@ -97,13 +109,13 @@
                     // var val = input.value
                     var taq = /([+-]?\d+(\.\d+)?)\/([+-]?\d+(\.\d+)?)/g
                     var zarb = /([+-]?\d+(\.\d+)?)\*([+-]?\d+(\.\d+)?)/g
-                    var plus = /([+-]?\d+(\.\d+)?)\+([+-]?\d+(\.\d+)?)/g
-                    var menha = /([+-]?\d+(\.\d+)?)\-([+-]?\d+(\.\d+)?)/g
-                    var manfiNum = /^-\d+(\.\d+)?/g
+                    // var plus = /([+-]?\d+(\.\d+)?)\+([+-]?\d+(\.\d+)?)/g
+                    // var menha = /([+-]?\d+(\.\d+)?)\-([+-]?\d+(\.\d+)?)/g
+                    // var manfiNum = /^-\d+(\.\d+)?$/g
                     var jaygahTaq = input.value.indexOf('/')
                     var jaygahZarb = input.value.indexOf('*')
-                    var jaygahPlus = input.value.indexOf('+')
-                    var jaygahMenha = input.value.indexOf('-')
+                    var jaygahPlus = input.value.indexOf('+' , 1)
+                    var jaygahMenha = input.value.indexOf('-' , 1)
 
                     ////////taqsim//////////////
                     while (jaygahTaq != -1) {
@@ -115,7 +127,10 @@
 
                         input.value = input.value.replace(previous1 + '/' + next1 , previous1 / next1 )
                         console.log(input.value.replace(previous1 + '/' + next1 , previous1 / next1 ));
-                        var jaygahTaq = input.value.indexOf('/')
+                        jaygahTaq = input.value.indexOf('/')
+                        jaygahZarb = input.value.indexOf('*')
+                        jaygahPlus = input.value.indexOf('+' , 1)
+                        jaygahMenha = input.value.indexOf('-', 1)
                     }
                     ////////zarb//////////////
                     while (jaygahZarb != -1) {
@@ -125,34 +140,42 @@
                         var next2 = parseFloat(input.value.slice(jaygahZarb + 1)) //عدد بعد
                         input.value = input.value.replace(previous2 + '*' + next2 , previous2 * next2 )
                         console.log(input.value);
-                        var jaygahZarb = input.value.indexOf('*')
+                        jaygahTaq = input.value.indexOf('/')
+                        jaygahZarb = input.value.indexOf('*')
+                        jaygahPlus = input.value.indexOf('+' , 1)
+                        jaygahMenha = input.value.indexOf('-', 1)
                     }
-                    ////////jam/////////////////
-                    while (jaygahPlus != -1) {
-
-                        var num3 = input.value.search(plus)
-                        var previous3 = input.value.slice(num3 , jaygahPlus) 
-                        var next3 = parseFloat(input.value.slice(jaygahPlus + 1)) 
-                        input.value = input.value.replace(previous3 + '+' + next3 , Number(previous3) + Number(next3) )
-                        console.log(input.value);
-                        var jaygahPlus = input.value.indexOf('+')
-                    }
-                    ////////menha/////////////////
-                    while (jaygahMenha != -1) {
-                        if (menha.test(input.value)) {
-                            var num4 = input.value.search(menha)
-                            var previous4 = input.value.slice(num4 , jaygahMenha) 
-                            var next4 = parseFloat(input.value.slice(jaygahMenha + 1)) 
-                            input.value = input.value.replace(previous4 + '-' + next4 , Number(previous4) - Number(next4) )
-                            console.log(input.value);
-                            
-                            var jaygahMenha = input.value.indexOf('-')
-                            
-                        }else if(manfiNum.test(input.value)){
-                            break;
+                    ////////jam/////menha////////////
+                    while (jaygahPlus != -1 || jaygahMenha != -1) {
+                        if (input.value.indexOf("+") == 0) {
+                            input.value = input.value.slice(1)
                         }
-    
+                        var alamat = (input.value.replace(parseFloat(input.value) , "")).slice(0 , 1)
+                        if (alamat == "+") {
+                            input.value = input.value.replace(parseFloat(input.value) + "+" + parseFloat(input.value.slice(jaygahPlus + 1)), parseFloat(input.value) + parseFloat(input.value.slice(jaygahPlus + 1)))
+                            jaygahPlus = input.value.indexOf("+" , 1)
+                            jaygahMenha = input.value.indexOf("-", 1)
+                        }else if (alamat == "-") {
+                            input.value = input.value.replace(parseFloat(input.value) + "-" + parseFloat(input.value.slice(jaygahMenha + 1)), parseFloat(input.value) - parseFloat(input.value.slice(jaygahMenha + 1)))
+                            jaygahPlus = input.value.indexOf("+" , 1)
+                            jaygahMenha = input.value.indexOf("-", 1)
+                        }
                     }
+                    // while (jaygahMenha != -1) {
+                    //     if (menha.test(input.value)) {
+                    //         var num4 = input.value.search(menha)
+                    //         var previous4 = input.value.slice(num4 , jaygahMenha) 
+                    //         var next4 = parseFloat(input.value.slice(jaygahMenha + 1)) 
+                    //         input.value = input.value.replace(previous4 + '-' + next4 , Number(previous4) - Number(next4) )
+                    //         console.log(input.value);
+                            
+                    //         var jaygahMenha = input.value.indexOf('-')
+                            
+                    //     }else if(manfiNum.test(input.value)){
+                    //         break;
+                    //     }
+    
+                    // }
 
                 } else if(ev.target.innerHTML == '+' || ev.target.dataset.number == '-' || ev.target.dataset.number == '*' || ev.target.dataset.number == '/'){//operator
                     input.value += ev.target.innerHTML
